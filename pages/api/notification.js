@@ -11,7 +11,9 @@ export default function handler(req, res) {
   if (req.method === "POST") {
     const subscription = req.body;
 
+    console.log("subscription info");
     console.log(subscription);
+    console.log("--------------------");
 
     const payload = JSON.stringify({
       title: "Hello!",

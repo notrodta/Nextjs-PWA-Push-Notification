@@ -49,6 +49,9 @@ export default function Home() {
           registration.pushManager
             .getSubscription()
             .then(function (existedSubscription) {
+              console.log("exisiting subscription");
+              console.log(existedSubscription);
+              console.log("................");
               if (existedSubscription === null) {
                 console.log("No subscription detected, make a request.");
                 registration.pushManager
@@ -59,6 +62,8 @@ export default function Home() {
                   })
                   .then(function (newSubscription) {
                     console.log("New subscription added.");
+                    console.log(newSubscription);
+                    console.log("..............");
                     sendSubscription(newSubscription);
                   })
                   .catch(function (e) {
