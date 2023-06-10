@@ -6,8 +6,15 @@ import { useEffect, useState } from "react";
 export default function Home() {
   const publicKey =
     "BDeEjWwSClAYzHE15bxl1I0vlnTryaLz8XrfiqpX_nq9sLnmrEL3W-q_y3628MGBjJ10XKFb21LKk1OQGBsrf9Q";
-
+  let convertedVapidKey;
   // const convertedVapidKey = urlBase64ToUint8Array(publicKey);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      convertedVapidKey = urlBase64ToUint8Array(publicKey);
+      console.log(convertedVapidKey);
+    }
+  }, []);
 
   function urlBase64ToUint8Array(base64String) {
     const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
@@ -56,8 +63,8 @@ export default function Home() {
                 console.log("No subscription detected, make a request.");
                 registration.pushManager
                   .subscribe({
-                    // applicationServerKey: convertedVapidKey,
-                    applicationServerKey: publicKey,
+                    applicationServerKey: convertedVapidKey,
+                    // applicationServerKey: publicKey,
                     userVisibleOnly: true,
                   })
                   .then(function (newSubscription) {
@@ -98,11 +105,12 @@ export default function Home() {
   return (
     <div className="p-0">
       <Navbar />
-      <div className="w-100">
+      {/* <div className="w-100">
         <img src="/home.jpg" className="img-fluid" />
-        <button onClick={subscribeUser}>Subscribe!</button>
-      </div>
+      </div> */}
       <div className="container my-5">
+        <br />
+        <button onClick={subscribeUser}>Subscribe!</button>
         <div className="row">
           <Card src="https://images.pexels.com/photos/397096/pexels-photo-397096.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" />
           <Card src="https://images.pexels.com/photos/629162/pexels-photo-629162.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" />
