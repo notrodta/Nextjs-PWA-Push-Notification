@@ -36,9 +36,14 @@ export default function handler(req, res) {
     webpush
       .sendNotification(subscription, payload, options)
       .then((result) => console.log(result))
-      .catch((e) => console.log(e.stack));
+      .catch((e) => console.log("error???: " + e.stack));
 
-    res.status(200).json({ success: true });
+    res.status(200).json({
+      success: true,
+      endpoint: subscription.endpoint,
+      expirationTime: subscription.expirationTime,
+      keys: subscription.keys,
+    });
   } else {
     // Handle any other HTTP method
   }
