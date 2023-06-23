@@ -7,6 +7,11 @@ const webPushContact = "mailto: contact@my-site.com";
 
 webpush.setVapidDetails(webPushContact, publicKey, privateKey);
 
+function randomIntFromInterval(min, max) {
+  // min and max included
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
 export default function handler(req, res) {
   if (req.method === "POST") {
     const subscription = req.body;
@@ -28,9 +33,12 @@ export default function handler(req, res) {
       // proxy: { host: "fcm.googlesapis.com", port: 443 },
     };
 
+    const rndInt = randomIntFromInterval(1, 100);
+
     const payload = JSON.stringify({
       title: "Hello!",
-      body: "It works.",
+      // body: "It works.",
+      body: rndInt.toString(),
     });
 
     webpush
@@ -40,6 +48,7 @@ export default function handler(req, res) {
 
     res.status(200).json({
       success: true,
+      body: rndInt.toString(),
       endpoint: subscription.endpoint,
       expirationTime: subscription.expirationTime,
       keys: subscription.keys,
