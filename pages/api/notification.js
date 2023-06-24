@@ -33,6 +33,8 @@ export default function handler(req, res) {
       // proxy: { host: "fcm.googlesapis.com", port: 443 },
     };
 
+    let response1 = "?";
+    let response2 = "!";
     const rndInt = randomIntFromInterval(1, 100);
 
     const payload = JSON.stringify({
@@ -43,16 +45,51 @@ export default function handler(req, res) {
 
     webpush
       .sendNotification(subscription, payload, options)
-      .then((result) => console.log(result))
-      .catch((e) => console.log("error???: " + e.stack));
+      .then((result) => {
+        response1 = "then:--- " + JSON.stringify(result);
+        const thenres = "then:--- " + JSON.stringify(result);
+        console.log(response1);
+        console.log(result);
+        res.status(200).json({
+          success: true,
+          test: "7899",
+          body: rndInt.toString(),
+          endpoint: subscription.endpoint,
+          expirationTime: subscription.expirationTime,
+          keys: subscription.keys,
+          thenRes: thenres,
+          errorRes: response2,
+        });
+      })
+      .catch((e) => {
+        // response2 = "catch e: --- " + e.stringify();
+        response2 = "catch e: --- " + JSON.stringify(e);
+        const errorres = "catch e: --- " + JSON.stringify(e);
+        console.log(response2);
+        console.log("error???: " + e.stack);
 
-    res.status(200).json({
-      success: true,
-      body: rndInt.toString(),
-      endpoint: subscription.endpoint,
-      expirationTime: subscription.expirationTime,
-      keys: subscription.keys,
-    });
+        res.status(200).json({
+          success: true,
+          test: "123",
+          body: rndInt.toString(),
+          endpoint: subscription.endpoint,
+          expirationTime: subscription.expirationTime,
+          keys: subscription.keys,
+          thenRes: response1,
+          errorRes: errorres,
+        });
+      });
+
+    // res.status(200).json({
+    //   success: true,
+    //   test: "123",
+    //   body: rndInt.toString(),
+    //   endpoint: subscription.endpoint,
+    //   expirationTime: subscription.expirationTime,
+    //   keys: subscription.keys,
+    //   thenRes: response1,
+    //   errorRes: response2,
+    // });
   } else {
     // Handle any other HTTP method
   }

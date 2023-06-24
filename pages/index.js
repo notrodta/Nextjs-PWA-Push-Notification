@@ -9,6 +9,8 @@ export default function Home() {
   const [keys, setKeys] = useState("");
   const [body, setBody] = useState("");
   const [isSupportWebPush, setIsSupportWebPush] = useState("");
+  const [thenRes, setThenRes] = useState("");
+  const [errorRes, setErrorRes] = useState("");
 
   const publicKey =
     "BDeEjWwSClAYzHE15bxl1I0vlnTryaLz8XrfiqpX_nq9sLnmrEL3W-q_y3628MGBjJ10XKFb21LKk1OQGBsrf9Q";
@@ -55,6 +57,8 @@ export default function Home() {
         setExpirationTime(data.expirationTime);
         setKeys(data.keys);
         setBody(data.body);
+        setThenRes(data.thenRes);
+        setErrorRes(data.errorRes);
       });
   }
 
@@ -144,6 +148,8 @@ export default function Home() {
         <p>keys (p256dh): {keys.p256dh}</p>
         <p>response: {body}</p>
         <p>Supports web push: {isSupportWebPush.toString()}</p>
+        <p>then res: {thenRes}</p>
+        <p>errorRes: {errorRes}</p>
         <div className="row">
           <Card src="https://images.pexels.com/photos/397096/pexels-photo-397096.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" />
           <Card src="https://images.pexels.com/photos/629162/pexels-photo-629162.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" />
