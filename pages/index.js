@@ -11,6 +11,7 @@ export default function Home() {
   const [isSupportWebPush, setIsSupportWebPush] = useState("");
   const [thenRes, setThenRes] = useState("");
   const [errorRes, setErrorRes] = useState("");
+  const [clientError, setClientError] = useState("");
 
   const publicKey =
     "BDeEjWwSClAYzHE15bxl1I0vlnTryaLz8XrfiqpX_nq9sLnmrEL3W-q_y3628MGBjJ10XKFb21LKk1OQGBsrf9Q";
@@ -62,6 +63,29 @@ export default function Home() {
       });
   }
 
+  function unSubscribe() {
+    navigator.serviceWorker.ready.then((reg) => {
+      reg.pushManager.getSubscription().then((subscription) => {
+        if (subscription !== null) {
+          subscription
+            .unsubscribe()
+            .then((successful) => {
+              // You've successfully unsubscribed
+              console.log("unsubscribed");
+              console.log(successful);
+            })
+            .catch((e) => {
+              // Unsubscribing failed
+              console.log("unsubscribed failed");
+              console.log(e);
+            });
+        } else {
+          console.log("nothing to unsubscribe");
+        }
+      });
+    });
+  }
+
   function subscribeUser() {
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.ready
@@ -93,6 +117,7 @@ export default function Home() {
                   })
                   .catch(function (e) {
                     console.log(e);
+                    setClientError(e.toString());
                     if (Notification.permission !== "granted") {
                       console.log("Permission was not granted.");
                     } else {
@@ -143,6 +168,7 @@ export default function Home() {
       <div className="container my-5">
         <br />
         <button onClick={subscribeUser}>Subscribe!</button>
+        <button onClick={unSubscribe}>UnSubscribe!</button>
         <p>endpoint: {endpoint}</p>
         <p>expirationTime: {expirationTime || "null"}</p>
         <p>keys (auth): {keys.auth}</p>
@@ -151,6 +177,7 @@ export default function Home() {
         <p>Supports web push: {isSupportWebPush.toString()}</p>
         <p>then res: {thenRes}</p>
         <p>errorRes: {errorRes}</p>
+        <p>clientError?: {clientError}</p>
         <div className="row">
           <Card src="https://images.pexels.com/photos/397096/pexels-photo-397096.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" />
           <Card src="https://images.pexels.com/photos/629162/pexels-photo-629162.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" />
