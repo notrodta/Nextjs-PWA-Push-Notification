@@ -92,6 +92,7 @@ export default function Home() {
                     sendSubscription(newSubscription);
                   })
                   .catch(function (e) {
+                    console.log(e);
                     if (Notification.permission !== "granted") {
                       console.log("Permission was not granted.");
                     } else {
