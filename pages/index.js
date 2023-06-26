@@ -62,6 +62,29 @@ export default function Home() {
       });
   }
 
+  function unSubscribe() {
+    navigator.serviceWorker.ready.then((reg) => {
+      reg.pushManager.getSubscription().then((subscription) => {
+        if (subscription !== null) {
+          subscription
+            .unsubscribe()
+            .then((successful) => {
+              // You've successfully unsubscribed
+              console.log("unsubscribed");
+              console.log(successful);
+            })
+            .catch((e) => {
+              // Unsubscribing failed
+              console.log("unsubscribed failed");
+              console.log(e);
+            });
+        } else {
+          console.log("nothing to unsubscribe");
+        }
+      });
+    });
+  }
+
   function subscribeUser() {
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.ready
@@ -143,6 +166,7 @@ export default function Home() {
       <div className="container my-5">
         <br />
         <button onClick={subscribeUser}>Subscribe!</button>
+        <button onClick={unSubscribe}>UnSubscribe!</button>
         <p>endpoint: {endpoint}</p>
         <p>expirationTime: {expirationTime || "null"}</p>
         <p>keys (auth): {keys.auth}</p>
