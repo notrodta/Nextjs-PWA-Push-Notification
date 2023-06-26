@@ -18,7 +18,7 @@ export default function handler(req, res) {
 
     console.log("subscription info");
     console.log(subscription);
-    console.log("--------------------");
+    console.log("-----------------__---");
 
     const options = {
       // vapidDetails: {
