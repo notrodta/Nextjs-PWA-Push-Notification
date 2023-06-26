@@ -34,7 +34,7 @@ export default function handler(req, res) {
     };
 
     let response1 = "?";
-    let response2 = "!";
+    let response2 = "!!";
     const rndInt = randomIntFromInterval(1, 100);
 
     const payload = JSON.stringify({
