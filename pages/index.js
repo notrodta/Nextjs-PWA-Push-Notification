@@ -3,6 +3,8 @@ import Navbar from "../components/Navbar";
 import Card from "../components/Card";
 import { useEffect, useState } from "react";
 
+let convertedVapidKey;
+
 export default function Home() {
   const [endpoint, setEndpoint] = useState("");
   const [expirationTime, setExpirationTime] = useState("");
@@ -15,15 +17,14 @@ export default function Home() {
 
   const publicKey =
     "BDeEjWwSClAYzHE15bxl1I0vlnTryaLz8XrfiqpX_nq9sLnmrEL3W-q_y3628MGBjJ10XKFb21LKk1OQGBsrf9Q";
-  let convertedVapidKey;
   // const convertedVapidKey = urlBase64ToUint8Array(publicKey);
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      convertedVapidKey = urlBase64ToUint8Array(publicKey);
-      console.log(convertedVapidKey);
-    }
-  });
+  // useEffect(() => {
+  //   if (typeof window !== "undefined") {
+  //     convertedVapidKey = urlBase64ToUint8Array(publicKey);
+  //     console.log(convertedVapidKey);
+  //   }
+  // });
 
   function urlBase64ToUint8Array(base64String) {
     const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
@@ -88,6 +89,13 @@ export default function Home() {
   }
 
   function subscribeUser() {
+    if (typeof window !== "undefined") {
+      if (!convertedVapidKey) {
+        convertedVapidKey = urlBase64ToUint8Array(publicKey);
+        console.log(convertedVapidKey);
+      }
+    }
+
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.ready
         .then(function (registration) {
