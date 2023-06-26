@@ -23,7 +23,7 @@ export default function Home() {
       convertedVapidKey = urlBase64ToUint8Array(publicKey);
       console.log(convertedVapidKey);
     }
-  }, []);
+  });
 
   function urlBase64ToUint8Array(base64String) {
     const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
@@ -81,6 +81,7 @@ export default function Home() {
             });
         } else {
           console.log("nothing to unsubscribe");
+          setClientError("nothing to unsubscribe");
         }
       });
     });
@@ -177,7 +178,8 @@ export default function Home() {
         <p>Supports web push: {isSupportWebPush.toString()}</p>
         <p>then res: {thenRes}</p>
         <p>errorRes: {errorRes}</p>
-        <p>clientError?: {clientError}</p>
+        <p>clientError???: {clientError}</p>
+        {/* <p>clientError???: {clientError}</p> */}
         <div className="row">
           <Card src="https://images.pexels.com/photos/397096/pexels-photo-397096.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" />
           <Card src="https://images.pexels.com/photos/629162/pexels-photo-629162.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" />
