@@ -17,7 +17,7 @@ export default function Home() {
 
   const publicKey =
     "BDeEjWwSClAYzHE15bxl1I0vlnTryaLz8XrfiqpX_nq9sLnmrEL3W-q_y3628MGBjJ10XKFb21LKk1OQGBsrf9Q";
-  // const convertedVapidKey = urlBase64ToUint8Array(publicKey);
+  // const convertedVapidKey = urlBase64ToUint8Array(publicKey); ..
 
   // useEffect(() => {
   //   if (typeof window !== "undefined") {
